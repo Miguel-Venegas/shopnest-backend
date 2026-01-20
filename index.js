@@ -12,9 +12,27 @@ app.get("/health", (req, res) => res.json({ ok: true }));
 app.set("trust proxy", 1);
 app.use(helmet());
 
+const allowedOrigins = [
+  process.env.CLIENT_ORIGIN, // main Vercel prod URL
+  "http://localhost:5173",
+];
+
 app.use(cors({
-  origin: process.env.CLIENT_ORIGIN,
-  credentials: true
+  origin: (origin, callback) => {
+    // Allow non-browser tools (Postman, curl)
+    if (!origin) return callback(null, true);
+
+    const isAllowed =
+      allowedOrigins.includes(origin) ||
+      origin.endsWith(".vercel.app");
+
+    if (isAllowed) {
+      return callback(null, true);
+    }
+
+    return callback(new Error(`CORS blocked for origin: ${origin}`));
+  },
+  credentials: true,
 }));
 
 app.use(express.json());
