@@ -2,6 +2,18 @@ const Cart = require("../models/Cart");
 
 exports.ensureCart = async (req, res, next) => {
   try {
+
+    // cookie options
+
+    const cookieOptions = {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      path: "/",
+    };
+
+
+
     // 1️Read cartId from cookies
     let { cartId } = req.cookies;
 
@@ -9,10 +21,7 @@ exports.ensureCart = async (req, res, next) => {
     if (!cartId) {
       const cart = await Cart.create({ items: [] });
       
-      res.cookie("cartId", cart._id.toString(), {
-        httpOnly: true,
-        sameSite: "lax",
-      });
+      res.cookie("cartId", cart._id.toString(), cookieOptions);
 
       req.cart = cart;
       return next();
@@ -25,10 +34,7 @@ exports.ensureCart = async (req, res, next) => {
     if (!cart) {
       const newCart = await Cart.create({ items: [] });
 
-      res.cookie("cartId", newCart._id.toString(), {
-        httpOnly: true,
-        sameSite: "lax",
-      });
+      res.cookie("cartId", newCart._id.toString(), cookieOptions);
 
       req.cart = newCart;
       return next();
