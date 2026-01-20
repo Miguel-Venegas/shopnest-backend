@@ -69,6 +69,13 @@ exports.updateProductQuantity = async (req, res) => {
   const { quantity } = req.body;
   const cart = req.cart;
 
+  console.log("cart items:", cart.items.map(i => ({
+    product: i.product.toString?.() ?? i.product,
+    quantity: i.quantity
+  })));
+  console.log("trying to update productId:", productId);
+
+
   if (quantity < 1) {
     return res.status(400).json({ error: "Quantity must be >= 1" });
   }
