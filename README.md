@@ -161,21 +161,21 @@ The frontend does not maintain authoritative state; all critical state transitio
 #### Successful merchant sign-in returns a signed session cookie.
 Authentication is handled via cookie-based sessions, with security headers and rate limiting enforced at the API layer.
 
-[!Merchant sign-in, set cookie session](/assets/sign-in-set-cookie-header.png)
-[!Merchant session key-value pair](/assets/set-cookie.png)
+![Merchant sign-in, set cookie session](assets/sign-in-set-cookie-header.png)
+![Merchant session key-value pair](assets/set-cookie.png)
 
 
 #### The backend recognizes the session on subsequent requests
 
-[!Merchant same session, follow up request](/assets/session-requests.png)
+![Merchant same session, follow up request](assets/session-requests.png)
 
 #### Authorization Enforcement
 Authorization is enforced server-side, not assumed client-side.
-[!Merchant authorization enforcement](/assets/authorization-enforcement.png)
+![Merchant authorization enforcement](assets/authorization-enforcement.png)
 
 #### Ownership Enforcement
 Ensures merchants can only access and manage resources they own, preventing unauthorized reads or mutations across accounts.
-[!Merchant ownership enforcement](/assets/ownership-enforcement.png)
+![Merchant ownership enforcement](assets/ownership-enforcement.png)
 
 #### CRUD Operations
 Supports full create, read, update, and delete workflows with server-side validation and role-aware access control.
@@ -183,19 +183,19 @@ Supports full create, read, update, and delete workflows with server-side valida
 ##### Update Example
 Demonstrates partial updates with validation, returning the updated resource while preserving unchanged fields.
 
-[!Update Example](/assets/crud-update-ex.png)
+![Update Example](assets/crud-update-ex.png)
 
 ##### Create Example
 Safely creates a resource under the authenticated merchant account, returning a confirmation response on success.
 
 
-[!Create Example](/assets/crud-create-ex.png)
+![Create Example](assets/crud-create-ex.png)
 
 
 ##### Database as Source of Truth
 The frontend UI automatically reflects products created via the API, confirming the database as the single source of truth.  
 
-[!UI Reflects Create Operation](/assets/ui-mirrors-crud.png)
+![UI Reflects Create Operation](assets/ui-mirrors-crud.png)
 
 
 ## Roadmap
